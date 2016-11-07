@@ -1,0 +1,185 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+
+#define Lon 16
+#define lar 16
+#define VIDE 0
+#define PJ1 1
+#define PJ2 2
+#define PJ3 3
+#define PJ4 4
+#define dJ 10
+#define qJ 11
+#define JvE 12
+#define EvE 13
+
+void Jeu(int NbJ,int NbE);
+void initialiser_Damier(int Damier[Lon][lar],int NombreJoueurHumain,int NombreJoueurEnvironnement);
+int menu_jeu_Halma();
+
+int main()
+{
+    int damier[Lon][lar] = {VIDE};
+    int NbJ;
+    int NbE;
+    int i = 0;
+    int j = 0;
+    NbJ = menu_jeu_Halma();
+    if(NbJ == dJ)
+    {
+        NbE = 0;
+        NbJ = 2;
+    }
+    else if(NbJ == qJ)
+    {
+        NbE = 0;
+        NbJ = 4;
+    }
+    else if(NbJ == JvE)
+    {
+        NbE = 1;
+        NbJ = 1;
+    }
+    else if(NbJ == EvE)
+    {
+        NbE = 2;
+        NbJ = 0;
+    }
+    else
+    {
+        NbE = 4-NbJ;
+    }
+    initialiser_Damier(damier,NbJ,NbE);
+    for(i = 0; i< lar; i++)
+        for(j = 0; j<Lon; j++)
+            if(damier[j][i] == PJ3)
+                printf("\nDamier[%d][%d]",j,i);
+    return 0;
+}
+
+int menu_jeu_Halma()
+{
+    char lettre_selection; /// lettre qui définie le mode de jeu
+    int nbr_joueur; /// utilisé pour le cas e du menu
+
+    printf("a) partie a 2 joueurs\n\n");
+    printf("b) partie a 4 joueurs\n\n");
+    printf("c) partie 1 joueur contre l'ordinateur\n\n");
+    printf("d) partie ordinateur contre ordinateur\n\n");
+    printf("e) partie de 0 a 3 humain contre une a 4 machines\n\n");
+    printf("appuyer sur la touche clavier du monde de jeu que vous souhaitez:\n\n");
+
+    while(!kbhit())
+    {
+        lettre_selection=getch();
+
+        switch(lettre_selection)
+        {
+        case 'a':
+            return dJ;
+            break;
+
+        case 'b':
+            return qJ;
+            break;
+
+        case 'c':
+            return JvE;
+            break;
+
+        case 'd':
+            return EvE;
+            break;
+
+        case 'e':
+            printf("Entrer le nombre de joueur que vous souhaitez:");
+            fflush(stdin);
+            nbr_joueur = fgetchar()-48;
+
+            while(nbr_joueur>3 || nbr_joueur < 0)
+            {
+                printf("Le nombre de joueur entré est incorect, resaisissez le nombre de joueur:");
+                fflush(stdin);
+                nbr_joueur = fgetchar() - 48;
+            }
+
+            if(nbr_joueur > 1)
+                printf("Vous serez donc %d joueurs contre %d ordinateurs\n\n",nbr_joueur,4-nbr_joueur);
+            else if(nbr_joueur == 1)
+                printf("Tu es donc tout seul face a 3 ordinateurs\n\n");
+            else
+                printf("Il y aura donc 4 ordinateurs\n\n");
+
+            return nbr_joueur;
+            break;
+        }
+    }
+}
+void initialiser_Damier(int Damier[Lon][lar],int NbJ,int NbE)
+{
+    int NbJTT = NbJ + NbE;
+    int x = 0;
+    int y = 0;
+
+    switch(NbJTT)
+    {
+    case 4:
+        /// On donne la valeur PJ1 à tous les pions situés en haut à gauche selon la répartition du jeu
+        for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                if(x<5 && y < 5 && (x+y < 6))
+                    Damier[x][y] = PJ1;
+                else if((x == 0 && y == 5) || (x == 5 && y == 0) )
+                    Damier[x][y] = VIDE;
+
+        /// On donne la valeur PJ2 à tous les pions situés en bas à droite selon la répartition du jeu
+        for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                if(x>10 && y>10 && (x+y > 24))
+                    Damier[x][y] = PJ2;
+                else if((x == 10 && y == 15) || (x == 15 && y == 10) )
+                    Damier[x][y] = VIDE;
+
+        /// On donne la valeur PJ3 à tous les pions situés en bas à gauche selon la répartition du jeu
+        for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                {
+                    if(x<5 && y > 10)
+                        Damier[x][y] = PJ3;
+                    if((x == 2 && y == 11) || (x == 3 && y == 11) || (x == 4 && y == 11) || (x == 3 && y == 12) || (x == 4 && y == 12) || (x == 4 && y == 13))
+                        Damier[x][y] = VIDE;
+                }
+
+        /// On donne la valeur PJ4 à tous les pions situés en bas à gauche selon la répartition du jeu
+          for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                {
+                    if(x>10 && y < 5)
+                        Damier[x][y] = PJ4;
+                    if((x == 11 && y == 2) || (x == 11 && y == 3) || (x == 11 && y == 4) || (x == 12 && y == 3) || (x == 12 && y == 4) || (x == 13 && y == 4))
+                        Damier[x][y] = VIDE;
+                }
+        break;
+    case 2:
+        /// On donne la valeur PJ1 à tous les pions situés en haut à gauche selon la répartition du jeu
+        for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                if(x<4 && y < 4 && (x+y < 5))
+                    Damier[x][y] = PJ1;
+                else if((x == 0 && y == 4) || (x == 4 && y == 0) )
+                    Damier[x][y] = VIDE;
+
+        /// On donne la valeur PJ2 à tous les pions situés en bas à droite selon la répartition du jeu
+        for(y=0; y<lar; y++)
+            for(x=0; x<Lon; x++)
+                if(x>11 && y>11 && (x+y > 25))
+                    Damier[x][y] = PJ2;
+                else if((x == 11 && y == 15) || (x == 15 && y == 11) )
+                    Damier[x][y] = VIDE;
+        break;
+    default:
+        printf("Error, program stops");
+        return EXIT_FAILURE;
+    }
+}

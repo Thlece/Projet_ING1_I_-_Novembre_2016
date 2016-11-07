@@ -14,62 +14,57 @@ void menu_jeu_Halma()
     printf("c) partie 2 joueurs contre l'ordinateur\n\n");
     printf("d) partie ordinateur contre ordinateur\n\n");
     printf("e) partie de 0 a 3 humain contre une a 4 machines\n\n");
-    printf("appuyer sur la touche clavier du monde de jeu que vous souhaitez:");
+    printf("appuyer sur la touche clavier du monde de jeu que vous souhaitez:\n\n");
 
 
-
-    if(kbhit())
+    while(lettre_selection!='a' || lettre_selection!='b' || lettre_selection!='c' || lettre_selection!='d' || lettre_selection!='e')
     {
-        lettre_selection=getch();
 
-        while(lettre_selection!='a' || lettre_selection!='b' || lettre_selection!='c' || lettre_selection!='d' || lettre_selection!='e')
+
+        if(kbhit())
         {
-            printf("choix du mode de jeux invalide recommencez:");
+            lettre_selection=getch();
 
-            if (kbhit())
-            {
-                lettre_selection=getch();
-            }
+
+                switch(lettre_selection)
+                 {
+                    case 'a':
+                         printf("Jeu(2, 0)");
+                        break;
+
+                    case 'b':
+                         printf("Jeu(4, 0)");
+                        break;
+
+                    case 'c':
+                         printf("Jeu(2, 2)");
+                        break;
+
+                    case 'd':
+                         printf("Jeu(0, 2)");
+                        break;
+
+                    case 'e':
+
+                        printf("enrer le nombre de joueur que vous souhaitez:");
+                        scanf("%d",&nbr_joueur);
+
+                        while(nbr_joueur>3)
+                        {
+
+                         printf("le nombre de joueur entré est incorect, resaisissez le nombre de joueur:\n\n");
+                            scanf("%d",&nbr_joueur);
+                        }
+                        printf("vous serez donc %d joueurs contre %d ordinateurs\n\n",nbr_joueur,4-nbr_joueur);
+                        printf("Jeu(nbr_joueur, 4-nbr_joueur)");
+
+                        break;
+                 }
 
         }
 
-            switch(lettre_selection)
-             {
-                case 'a':
-                     printf("Jeu(2, 0)");
-                    break;
-
-                case 'b':
-                     printf("Jeu(4, 0)");
-                    break;
-
-                case 'c':
-                     printf("Jeu(2, 2)");
-                    break;
-
-                case 'd':
-                     printf("Jeu(0, 2)");
-                    break;
-
-                case 'e':
-
-                    printf("enrer le nombre de joueur que vous souhaitez:");
-                    scanf("%d",&nbr_joueur);
-
-                    while(nbr_joueur>3)
-                    {
-
-                     printf("le nombre de joueur entré est incorect, resaisissez le nombre de joueur:");
-                        scanf("%d",&nbr_joueur);
-                    }
-
-                    printf("Jeu(nbr_joueur, 4-nbr_joueur)");
-
-                    break;
-             }
 
     }
-
 }
 
 
@@ -78,5 +73,5 @@ int main()
 {
     menu_jeu_Halma();
 
-    return 0;
+
 }

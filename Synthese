@@ -20,11 +20,10 @@ int menu_jeu_Halma();
 
 int main()
 {
+    /// Declarations des variables
     int damier[Lon][lar] = {VIDE};
     int NbJ;
     int NbE;
-    int i = 0;
-    int j = 0;
     NbJ = menu_jeu_Halma();
     if(NbJ == dJ)
     {
@@ -51,6 +50,10 @@ int main()
         NbE = 4-NbJ;
     }
     initialiser_Damier(damier,NbJ,NbE);
+    
+    /// Affichage pour test
+    int i = 0;
+    int j = 0;
     for(i = 0; i< lar; i++)
         for(j = 0; j<Lon; j++)
             if(damier[j][i] == PJ3)

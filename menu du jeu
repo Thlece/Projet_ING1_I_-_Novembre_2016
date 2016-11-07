@@ -6,8 +6,8 @@ void Jeu(int NbJ,int NbE);
 
 void menu_jeu_Halma()
 {
-    char lettre_selection; /// lettre qui définie le mode de jeu
-    int nbr_joueur; /// utilisé pour le cas e du menu
+    char lettre_selection; /// lettre qui dÃ©finie le mode de jeu
+    int nbr_joueur; /// utilisÃ© pour le cas e du menu
 
     printf("a) partie a 2 joueurs\n\n");
     printf("b) partie a 4 joueurs\n\n");
@@ -59,7 +59,7 @@ void menu_jeu_Halma()
                     while(nbr_joueur>3)
                     {
 
-                     printf("le nombre de joueur entré est incorect, resaisissez le nombre de joueur:");
+                     printf("le nombre de joueur entrÃ© est incorect, resaisissez le nombre de joueur:");
                         scanf("%d",&nbr_joueur);
                     }
 

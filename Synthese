@@ -49,6 +49,7 @@ int main()
     {
         NbE = 4-NbJ;
     }
+    
     initialiser_Damier(damier,NbJ,NbE);
     
     /// Affichage pour test
